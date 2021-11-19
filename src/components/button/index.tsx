@@ -1,38 +1,26 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { IconBaseProps } from "react-icons";
-import styled from "styled-components";
+import * as S from "./style";
 
-interface Props {
+export type ButtonProps = {
 	children?: React.ReactNode;
-	onClick: () => void;
-	width?: string;
-	icon?: React.ComponentType<IconBaseProps>;
-}
+	color: "black" | "white" | "blue" | "yellow";
+	size: "small" | "medium" | "large" | "xxlarge";
+	fontsize: "xsmall" | "xmedium" | "xlarge";
 
-const Container = styled.div`
-	button {
-	}
-`;
+	Icon?: string;
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-const Button: React.FC<Props> = ({ icon: Icon, children }) => {
+const Button = ({
+	children,
+	Icon,
+	color = "yellow",
+	size = "small",
+	fontsize = "xsmall",
+	...rest
+}: ButtonProps) => {
 	return (
-		<>
-			<Container>
-				<button>
-					{Icon && (
-						<Icon
-							
-							style={{
-								position: "relative",
-								top: "3px",
-								padding: "0 5px",
-							}}
-						/>
-					)}
-					{children}
-				</button>
-			</Container>
-		</>
+		<S.Button color={color} fontsize={fontsize} size={size} {...rest}>
+			{children}
+		</S.Button>
 	);
 };
 
