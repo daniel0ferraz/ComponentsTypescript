@@ -1,18 +1,32 @@
 import React, { useCallback, useState } from "react";
 import Button from "../../components/button";
 import Input from "../../components/input";
-import seta from "../../assets/arrow.svg";
+// import seta from "../../assets/arrow.svg";
 import "./styles.css";
+import * as yup from "yup";
+import Toast from "../../components/Toast";
+import { toast } from "react-toastify";
 
 interface Usuario {
+	name: string;
 	cep: string;
 	price: number;
 	cpf: number;
 	tel: string;
 }
 
+let schema = yup.object().shape({
+	name: yup.string().required(),
+	cep: yup.string().required(),
+	price: yup.string().required(),
+	cpf: yup.number().required(),
+	tel: yup.string().required(),
+});
+
 export default function Login() {
-	const [usuario, setUsuario] = useState<Usuario>({} as Usuario);
+	const [usuario, setUsuario] = useState<Usuario>({
+		schema,
+	} as unknown as Usuario);
 
 	const handleChange = useCallback(
 		(e: React.FormEvent<HTMLInputElement>) => {
@@ -27,6 +41,14 @@ export default function Login() {
 	return (
 		<>
 			<div className="container">
+				<div className="form-control">
+					<span>Nome</span>
+					<Input
+						name="name"
+						onChange={handleChange}
+						placeholder="Digite seu nome"
+					/>
+				</div>
 				<div className="form-control">
 					<span>CEP</span>
 					<Input
@@ -72,8 +94,14 @@ export default function Login() {
 					Salvar
 				</button> */}
 
+				<Toast/>
+
+				<Button 
+					fontsize="xsmall"
+					size="medium"
+					color="blue" onClick={()=> {toast.success('Mensagem Enviada!')}}>Aperta</Button>
+
 				<Button
-					Icon={seta}
 					fontsize="xsmall"
 					size="medium"
 					color="blue"
