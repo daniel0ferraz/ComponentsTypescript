@@ -1,13 +1,15 @@
 import React, { InputHTMLAttributes, useCallback } from "react";
 import "./styles.css";
+import * as Styled from "./styles";
+import { ExclamationTriangleIcon } from "react-line-awesome";
 import { cep, currency, cpf, phone } from "./masks";
-
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+export type InputProps = {
+	error?: string;
 	mask?: "cep" | "currency" | "cpf" | "phone";
 	prefix?: string;
-}
+} & InputHTMLAttributes<HTMLInputElement>;
 
-const Input: React.FC<InputProps> = ({ mask, prefix, ...props }) => {
+const Input: React.FC<InputProps> = ({ mask, prefix, error, ...rest }) => {
 	const handleKeyUp = useCallback(
 		(e: React.FormEvent<HTMLInputElement>) => {
 			if (mask === "cep") {
@@ -27,10 +29,21 @@ const Input: React.FC<InputProps> = ({ mask, prefix, ...props }) => {
 	);
 
 	return (
-		<div className="input-group prefix">
+		<Styled.Container>
 			{prefix && <span className="prefix-span">{prefix}</span>}
-			<input {...props} onKeyUp={handleKeyUp} />
-		</div>
+			<Styled.Input
+				{...rest}
+				// placeholder={error ? "Error" : rest.placeholder}
+				onKeyUp={handleKeyUp}
+			/>
+
+			{error && (
+				<>
+					<Styled.ErrorText>{error}</Styled.ErrorText>
+					<ExclamationTriangleIcon />
+				</>
+			)}
+		</Styled.Container>
 	);
 };
 

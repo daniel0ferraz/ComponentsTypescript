@@ -1,41 +1,43 @@
 import React, { useCallback, useState } from "react";
 import Button from "../../components/button";
 import Input from "../../components/input";
-// import seta from "../../assets/arrow.svg";
+
 import "./styles.css";
-import * as yup from "yup";
 import Toast from "../../components/Toast";
 import { toast } from "react-toastify";
 
-interface Usuario {
+import { userLoginValidation } from "../../utils/validations/userLoginValidations";
+import { FormErrors } from "../../utils/validations/getValidationsErrors";
+
+type User = {
 	name: string;
 	cep: string;
-	price: number;
-	cpf: number;
+	price: string;
+	cpf: string;
 	tel: string;
-}
-
-let schema = yup.object().shape({
-	name: yup.string().required(),
-	cep: yup.string().required(),
-	price: yup.string().required(),
-	cpf: yup.number().required(),
-	tel: yup.string().required(),
-});
+};
 
 export default function Login() {
-	const [usuario, setUsuario] = useState<Usuario>({
-		schema,
-	} as unknown as Usuario);
+	const [userForm, setUserForm] = useState({} as User);
+	const [errors, setErrors] = useState({} as FormErrors);
+
+	const handleSubmit = async () => {
+		const errors = await userLoginValidation(userForm);
+
+		if (errors) {
+			toast.error(errors);
+			return setErrors(errors);
+		}
+	};
 
 	const handleChange = useCallback(
 		(e: React.FormEvent<HTMLInputElement>) => {
-			setUsuario({
-				...usuario,
+			setUserForm({
+				...userForm,
 				[e.currentTarget.name]: e.currentTarget.value,
 			});
 		},
-		[usuario]
+		[userForm]
 	);
 
 	return (
@@ -45,17 +47,22 @@ export default function Login() {
 					<span>Nome</span>
 					<Input
 						name="name"
-						onChange={handleChange}
 						placeholder="Digite seu nome"
+						error={errors.name}
+						onChange={handleChange}
+						onFocus={() => setErrors({})}
 					/>
+
+					{/* {errors && <p>{errors.name}</p>} */}
 				</div>
 				<div className="form-control">
 					<span>CEP</span>
 					<Input
 						name="cep"
 						mask="cep"
-						onChange={handleChange}
 						placeholder="99999-999"
+						onChange={handleChange}
+						onFocus={() => setErrors({})}
 					/>
 				</div>
 
@@ -64,8 +71,10 @@ export default function Login() {
 					<Input
 						name="cpf"
 						mask="cpf"
-						onChange={handleChange}
 						placeholder="999.999.999-99"
+						error={errors.cpf}
+						onChange={handleChange}
+						onFocus={() => setErrors({})}
 					/>
 				</div>
 
@@ -76,7 +85,9 @@ export default function Login() {
 						mask="currency"
 						prefix="R$"
 						placeholder="0,01"
+						error={errors.price}
 						onChange={handleChange}
+						onFocus={() => setErrors({})}
 					/>
 				</div>
 
@@ -86,27 +97,20 @@ export default function Login() {
 						name="tel"
 						mask="phone"
 						placeholder="()"
+						error={errors.tel}
 						onChange={handleChange}
+						onFocus={() => setErrors({})}
 					/>
 				</div>
 
-				{/* <button className="button" onClick={() => console.log(usuario)}>
-					Salvar
-				</button> */}
-
-				<Toast/>
-
-				<Button 
-					fontsize="xsmall"
-					size="medium"
-					color="blue" onClick={()=> {toast.success('Mensagem Enviada!')}}>Aperta</Button>
+				<Toast />
 
 				<Button
 					fontsize="xsmall"
 					size="medium"
 					color="blue"
-					onClick={() => console.log(usuario)}>
-					Button
+					onClick={() => handleSubmit()}>
+					Enviar
 				</Button>
 			</div>
 		</>
