@@ -105,6 +105,7 @@ export default function Login() {
 					<label>Telefone</label>
 					<Input
 						name="tel"
+						mask="phone"
 						placeholder="()"
 						error={errors.tel}
 						// onChange={handleChange}

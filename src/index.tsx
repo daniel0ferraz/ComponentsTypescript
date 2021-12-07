@@ -5,7 +5,7 @@ import Mask from "./pages/Mask/index";
 
 ReactDOM.render(
 	<React.StrictMode>
-		<Mask />
+		<Login />
 	</React.StrictMode>,
 	document.getElementById("root")
 );

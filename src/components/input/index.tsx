@@ -2,10 +2,10 @@ import React, { InputHTMLAttributes, useCallback } from "react";
 import "./styles.css";
 import * as Styled from "./styles";
 import { ExclamationTriangleIcon } from "react-line-awesome";
-import { cep, currency, cpf } from "./masks";
+import { cep, currency, cpf, phone } from "./masks";
 export type InputProps = {
 	error?: string;
-	mask?: "cep" | "currency" | "cpf";
+	mask?: "cep" | "currency" | "cpf" | "phone";
 	prefix?: string;
 } & InputHTMLAttributes<HTMLInputElement>;
 
@@ -20,6 +20,9 @@ const Input: React.FC<InputProps> = ({ mask, prefix, error, ...rest }) => {
 			}
 			if (mask === "cpf") {
 				cpf(e);
+			}
+			if (mask === "phone") {
+				phone(e);
 			}
 		},
 		[mask]
