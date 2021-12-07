@@ -30,13 +30,13 @@ export function cpf(e: React.FormEvent<HTMLInputElement>) {
 	return e;
 }
 
-export const phone = (e: React.FormEvent<HTMLInputElement>) => {
-	let value = e.currentTarget.value;
-	value.replace(/\D/g, "");
-	value.replace(/(\d{2})(\d)/, "($1) $2");
-	value.replace(/(\d{5})(\d)/, "$1-$2");
-	value.replace(/(-\d{4})(\d+?)$/, "$1");
+// export const phone = (e: React.FormEvent<HTMLInputElement>) => {
+// 	let value = e.currentTarget.value;
+// 	value.replace(/\D/g, "");
+// 	value.replace(/(\d{2})(\d)/, "($1) $2");
+// 	value.replace(/(\d{5})(\d)/, "$1-$2");
+// 	value.replace(/(-\d{4})(\d+?)$/, "$1");
 
-	e.currentTarget.value = value;
-	return (e.currentTarget.value = value);
-};
+// 	e.currentTarget.value = value;
+// 	return (e.currentTarget.value = value);
+// };

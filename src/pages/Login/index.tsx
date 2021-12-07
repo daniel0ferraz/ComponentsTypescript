@@ -40,6 +40,16 @@ export default function Login() {
 		[userForm]
 	);
 
+	const maskPhone = (value: any) => {
+		return value
+			.replace(/\D/g, "")
+			.replace(/(\d{2})(\d)/, "($1) $2")
+			.replace(/(\d{5})(\d)/, "$1-$2")
+			.replace(/(-\d{4})(\d+?)$/, "$1");
+	};
+
+	const [phone, setPhone] = useState("");
+
 	return (
 		<>
 			<div className="container">
@@ -95,10 +105,9 @@ export default function Login() {
 					<label>Telefone</label>
 					<Input
 						name="tel"
-						mask="phone"
 						placeholder="()"
 						error={errors.tel}
-						onChange={handleChange}
+						// onChange={handleChange}
 						onFocus={() => setErrors({})}
 					/>
 				</div>
