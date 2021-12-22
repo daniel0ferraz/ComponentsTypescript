@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import React from 'react';
-import CodeVerification from '../../components/CodeVerification';
+// import CodeVerification from '../../components/CodeVerification';
+import VerificationInput from 'react-verification-input';
 import './styles.css';
 
 export default function Authenticate() {
@@ -13,12 +14,12 @@ export default function Authenticate() {
 
   return (
     <>
-      <CodeVerification
+      <VerificationInput
         value="ada"
-        lenght={3}
+        length={6}
         placeholder={''}
         autoFocus={false}
-        removeDefaultStyles={true}
+        onChange={handleSubmit}
         classNames={{
           container: 'container',
           character: 'character',
