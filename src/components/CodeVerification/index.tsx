@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { ChangeEventHandler } from 'react';
 import VerificationInput from 'react-verification-input';
 import './styles.css';
 type Props = {
-  value: string;
+  value?: any;
   lenght: number;
   placeholder: string;
   autoFocus: boolean;
   removeDefaultStyles: boolean;
   classNames?: object;
+  onChange?: (value: string) => void;
 };
 
 export default function CodeVerification({
@@ -16,7 +17,8 @@ export default function CodeVerification({
   placeholder,
   autoFocus,
   removeDefaultStyles,
+  onChange,
   ...rest
 }: Props) {
-  return <VerificationInput {...rest} />;
+  return <VerificationInput onChange={onChange} {...rest} />;
 }
