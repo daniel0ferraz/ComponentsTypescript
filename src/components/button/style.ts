@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, {css, DefaultTheme}  from "styled-components";
 import { ButtonProps } from "./index";
 
 type Props = Pick<ButtonProps, "size" | "color" | "fontsize">;
@@ -57,7 +57,7 @@ const modifiersButton = {
 };
 
 export const Button = styled.button<Props>`
-	${({ fontsize, size, color }) => css`
+	${({ theme, fontsize, size, color }) => css`
 		height: 48px;
 		border-radius: 8px;
 		border: none;
